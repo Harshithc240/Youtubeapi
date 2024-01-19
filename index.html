@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Summary App</title>
+</head>
+<body>
+    <h1>Video Summary App</h1>
+    
+    <form id="videoForm">
+        <label for="videoUrl">Enter YouTube Video URL:</label>
+        <input type="text" id="videoUrl" name="videoUrl" placeholder="https://youtu.be/example-video">
+        
+        <button type="button" onclick="getVideoSummary()">Get Summary</button>
+    </form>
+
+    <div id="summaryResult"></div>
+
+    <script>
+        function getVideoSummary() {
+            var videoUrl = document.getElementById('videoUrl').value;
+            var summaryResult = document.getElementById('summaryResult');
+
+            fetch(`http://localhost:5000/summary?url=${videoUrl}`)
+                .then(response => response.text())
+                .then(summary => {
+                    summaryResult.innerHTML = `<p><strong>Summary:</strong> ${summary}</p>`;
+                })
+                .catch(error => {
+                    summaryResult.innerHTML = `<p><strong>Error:</strong> ${error}</p>`;
+                });
+        }
+    </script>
+</body>
+</html>
